@@ -2,7 +2,10 @@ import React from 'react';
 import Url from './components/urls_display'
 import Navbar from './components/navbar'
 import Footer from './components/footer'
+import Account from './components/account'
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 const firebase = require('firebase')
+
 
 class App extends React.Component{
   constructor(){;
@@ -14,9 +17,17 @@ class App extends React.Component{
   render(){
     return(
     <div>
+     
+      <Router>
           <Navbar/>
-          <Url url={this.state.url}></Url>
+          <Switch>
+              <Route  path='/Link' render={() =><Url url={this.state.url}/> }/>
+              <Route path='/Account' render={()=> <Account/>}/>
+          </Switch>
+          
           <Footer/>
+         
+          </Router>
           
          
     </div>)
@@ -38,6 +49,9 @@ class App extends React.Component{
       this.setState({ url: url });
     });// call after collections is updated
 
+  }
+  deleteUrl=()=>{
+    console.log('dsdsd')
   }
 }
 

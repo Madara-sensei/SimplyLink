@@ -1,11 +1,11 @@
 import React from 'react'
-
+import TableFooter from '@material-ui/core/TableFooter';
 class Footer extends React.Component{
-    constructor(){
-        super ()
-    }
+  
     render(){
-        return(<div></div>)
+        return(<div>
+            <TableFooter></TableFooter>
+        </div>)
     }
 }
 
