@@ -86,8 +86,14 @@ class App extends React.Component{
 
 
   }
-  DeleteUrl=(url,_index)=>{
-    console.log(url.id)
+  DeleteUrl= (index)=>{
+  
+    firebase
+    .firestore()
+    .collection('url')
+    .doc(index)
+    .delete()
+    
  
   }
 

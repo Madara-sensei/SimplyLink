@@ -1,17 +1,15 @@
 const avatar =theme => ({
-    name:{
-      bottom:0 ,
-      position: "absolute",
-
-    },
-    root: {
-
+    avt:{
       display: 'flex',
       '& > *': {
         margin: theme.spacing(1),
         margin: 'auto'
       },
+
     },
+    root: {
+      marginTop:'5%'
+     },
 
    
     large: {
@@ -20,15 +18,11 @@ const avatar =theme => ({
     },
     divider: {
         width: '100%',
-        maxWidth: 750,
-        backgroundColor: theme.palette.background.paper,
-        margin: 'auto',
-        
-        bottom: 0,
-      },
+        marginTop:'4%'
+       },
     name:{
-      margin: 'auto',
-      
+      textAlign: 'center',
+      marginTop:'4%'
       
 
     }

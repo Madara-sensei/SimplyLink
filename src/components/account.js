@@ -11,35 +11,38 @@ import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import Button from'@material-ui/core/Button'
 import EditIcon from '@material-ui/icons/Edit';
+import { Typography } from '@material-ui/core';
 
 class Account extends React.Component{
     render() {
         const{classes}=this.props
-        return(<Container className={classes.main} fixed>
+        return(<Container className={classes.root} >
 
-            <div className={classes.root}>
+            <div className={classes.avt}>
                 <Avatar alt="Remy Sharp"  className={classes.large} />
             </div>
+            <Typography className={classes.name}  color='secondary'  variant="h5" gutterBottom>Francis Martin</Typography>
           
              <List component="nav" className={classes.divider} aria-label="mailbox folders">
-             <Button className={classes.name}>Francis Martin</Button> 
+             
+             <Divider />
                 <ListItem button>
-                    <ListItemText primary="Privacy" />
-                    <SettingsIcon primary="grey"/>
+                    <ListItemText primary="Privacy"  />
+                    <SettingsIcon color="primary"/>
                 </ListItem>
                 <Divider />
                 <ListItem button divider>
-                    <ListItemText primary="Security"/>
-                    <SettingsIcon/>
+                    <ListItemText primary="Security"/>  
+                    <SettingsIcon  color="primary"/>
                 </ListItem>
                 <ListItem button>
                     <ListItemText primary="Content" />
-                    <SettingsIcon/>
+                    <SettingsIcon  color="primary"/>
                 </ListItem>
-                <Divider light />
+                <Divider />
                 <ListItem button>
                     <ListItemText primary="Policy" />
-                    <SettingsIcon/>
+                    <SettingsIcon  color="primary"/>
                 </ListItem>
            </List>
 

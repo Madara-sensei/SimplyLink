@@ -70,8 +70,8 @@ class Url extends React.Component{
               <TableCell align="right">
             
               
-              <Button onClick={()=>this.selector(_index),this.handleClick}
-              > <DeleteIcon color="secondary" onClick={this.DeleteUrl(_url,_index)} /></Button>
+              <Button   onClick={()=>this.DeleteUrl(_url.id)}
+              > <DeleteIcon color="secondary"/></Button>
               </TableCell>
                 </TableRow>
                 )
@@ -79,7 +79,7 @@ class Url extends React.Component{
               }
                 </TableBody>
               
-          </Table>
+          </Table>  
         </TableContainer>
           <Snackbar 
               color="primary"
@@ -131,14 +131,10 @@ class Url extends React.Component{
       this.props.update_redirect()
     }
      
+   
+    DeleteUrl=(index)=>{
+      this.props.DeleteUrl(index)
     
-    selector=(_index)=>{
-      this.setState({selectedindex:_index})
-      console.log("ssdd")
-     }
-    DeleteUrl=(_url,_index)=>{
-      this.props.DeleteUrl(_url,_index)
-      console.log(_index)
     }
     handleClose=()=>{
       if(this.state.msgdisplay){
