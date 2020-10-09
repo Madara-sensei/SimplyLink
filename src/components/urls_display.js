@@ -11,6 +11,8 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
+import { Typography } from '@material-ui/core';
+import Urlstyle from './styles/Urlstyles'
 
 
 
@@ -21,28 +23,35 @@ class Url extends React.Component{
         super()
         this.state={
           msgdisplay:null,
-         
           selectedindex:null
 
         }
     }
-   
-   
+  
     render(){
-     
-      const {url}=this.props
+      const {url,redirect,itemadded,classes}=this.props
+      if(redirect){
+        this.update_redirect()
+        
       
-
+      }
+      
       if(url){
-        return(<div>
-          <TableContainer >
+        return(
+        <div>
+          <Typography className={classes.title} color='secondary'  variant="h4" gutterBottom>
+               View here your favorite links.
+              </Typography>  
+       
+            
+          <TableContainer className={classes.url} >
             <Table  aria-label="simple table">
               <TableHead>
                 <TableRow>
-                  <TableCell>Title</TableCell>
-                  <TableCell align="right">Description</TableCell>
-                  <TableCell align="right">Link</TableCell>
-                  <TableCell align="right"  >Option</TableCell>
+                  <TableCell color="secondary">Title</TableCell>
+                  <TableCell color="secondary" align="right">Description</TableCell>
+                  <TableCell color="secondary"align="right">Link</TableCell>
+                  <TableCell color="secondary"align="right"  >Option</TableCell>
                 
               </TableRow>
               </TableHead>
@@ -55,16 +64,14 @@ class Url extends React.Component{
                 
                 
                 >
-              <TableCell >{_url.Title}<a href={_url.Link}/></TableCell>
-              <TableCell align="right">{_url.Description}</TableCell>
-              <TableCell align="right">{_url.Link}</TableCell>
+              <TableCell ><Button href ={_url.Link}>{_url.Title}</Button></TableCell>
+              <TableCell color="secondary" align="right"><Typography className={classes.des}>{_url.Description}...</Typography></TableCell>
+              <TableCell color="secondary" align="right">{_url.Link}...</TableCell>
               <TableCell align="right">
             
               
               <Button onClick={()=>this.selector(_index),this.handleClick}
-              > <DeleteIcon /></Button>
-
-
+              > <DeleteIcon color="secondary" onClick={this.DeleteUrl(_url,_index)} /></Button>
               </TableCell>
                 </TableRow>
                 )
@@ -74,7 +81,20 @@ class Url extends React.Component{
               
           </Table>
         </TableContainer>
-              <Snackbar
+          <Snackbar 
+              color="primary"
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+              }}
+              open={itemadded}
+              autoHideDuration={500}
+            
+              message="Item Added"
+            />  
+          <Snackbar
+             
+               color="inherit"
               anchorOrigin={{
                 vertical: 'bottom',
                 horizontal: 'left',
@@ -85,33 +105,41 @@ class Url extends React.Component{
               message="Link Deleted"
               action={
                 <React.Fragment>
-                  <Button color="secondary" size="small" onClick={this.handleClose}>
+                
+                  <Button color="primary" size="small" onClick={this.handleClose}>
                     UNDO
                   </Button>
                   <IconButton size="small" aria-label="close" color="inherit" onClick={this.handleClose}>
                     <CloseIcon fontSize="small" />
                   </IconButton>
+               
                 </React.Fragment>
+                
               }
           />
-      
-              
-        
-        
-        </div>
+      </div>
         
     )}else{
       return(<div></div>)}
     }
+
+   
            
          
       
-
+    update_redirect=()=>{
+      this.props.update_redirect()
+    }
      
     
     selector=(_index)=>{
       this.setState({selectedindex:_index})
+      console.log("ssdd")
      }
+    DeleteUrl=(_url,_index)=>{
+      this.props.DeleteUrl(_url,_index)
+      console.log(_index)
+    }
     handleClose=()=>{
       if(this.state.msgdisplay){
           
@@ -127,6 +155,6 @@ class Url extends React.Component{
 
    
 }
-export default Url
+export default withStyles (Urlstyle) (Url)
 
 

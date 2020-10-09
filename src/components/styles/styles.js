@@ -1,12 +1,20 @@
 
 const styles = theme=> ({
     Menu:{
-      position: 'absolute',
+      position: 'relative',
+      flexGrow:1,
+      borderRadius:3,
+      background:'#e64a19',
+      marginTop:'O%'
+
       
 
     },
     root: {
       flexGrow: 1,
+      borderRadius:3,
+      marginTop:'O%'
+      
     },
     menuButton: {
       marginRight: theme.spacing(2),

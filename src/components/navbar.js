@@ -29,23 +29,24 @@ class Navbar extends React.Component{
         <div className={classes.root}>
                     <AppBar position="static">
                         <Toolbar >
-                        <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu"
+                        <IconButton edge="start" className={classes.menuButton} color="secondary" aria-label="menu"
                         onClick={this.handleClick}>
                             <Menu className={classes.Menu}
+                              
                                 id="simple-menu"
-                                autoFocus={true}
+                              
                                 open={this.state.menudisplay}
-                            >
-                                <MenuItem onClick={this.handleClose} component={Link} to={'/Account'}>My account
-                                </MenuItem>
+                            >   
+                                <MenuItem color="primary" onClick={this.handleClose} component={Link} to={'/Add'}>Add URL</MenuItem>
+                                <MenuItem color="primary" onClick={this.handleClose} component={Link} to={'/Account'}>My account</MenuItem>
                                 <MenuItem onClick={this.handleClose}component={Link} to={'/Link'}>Links</MenuItem>
-                                <MenuItem onClick={this.handleClose}>Logout</MenuItem>
+                                <MenuItem onClick={this.handleClose}component={Link} to={'/'}>Logout</MenuItem>
                             </Menu>
                         
                             <MenuIcon />
                         </IconButton>
-                        <Typography variant="h6" className={classes.title}>
-                            Links
+                        <Typography color="secondary" variant="h6" className={classes.title}>
+                            SimplyLinks
                         </Typography>
                         <SearchIcon />
                         <InputBase
