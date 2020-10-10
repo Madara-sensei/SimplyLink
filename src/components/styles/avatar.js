@@ -10,7 +10,12 @@ const avatar =theme => ({
     root: {
       marginTop:'5%'
      },
+    log:{
+      textAlign: 'center',
+      marginTop:'4%'
 
+    },
+  
    
     large: {
       width: theme.spacing(20),

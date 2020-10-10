@@ -1,4 +1,4 @@
-import  GoogleLogin  from 'react-google-login';
+import { GoogleLogin,GoogleLogout}  from 'react-google-login';
 import React from 'react'
 
 
@@ -7,29 +7,62 @@ import React from 'react'
 class Auth extends React.Component{
     constructor(){
         super();
+       
+
+        
 
     }
     render(){
-        return(  
-        <GoogleLogin
-            clientId="153360537276-ir5ao4bhdubd31fi77mp504uomldefn5.apps.googleusercontent.com"
-            buttonText="Login"
-            onSuccess={this.responseGoogle}
-            onFailure={this.responseGoogle}
-            cookiePolicy={'single_host_origin'}
-          />
+      const{logged}=this.props
+      if(!logged){
+        return(   <GoogleLogin
+          clientId="153360537276-ir5ao4bhdubd31fi77mp504uomldefn5.apps.googleusercontent.com"
+          buttonText="Login"
+          onSuccess={this.responseGoogle.bind()}
+          onFailure={this.responseGoogle.bind()}
+          cookiePolicy={'single_host_origin'} />
           )
-    }
-    responseGoogle = (response) => {
-        console.log(response);
+     }else{
+        return(  <GoogleLogout
+          clientId="153360537276-ir5ao4bhdubd31fi77mp504uomldefn5.apps.googleusercontent.com"
+          buttonText='Logout'
+          onLogoutSuccess={ this.logout }
+          onFailure={ this.handleLogoutFailure }
+        ></GoogleLogout>
+          
+        )
       }
-   /* onSignIn=(googleUser)=> {
+      
+
+            
+       
+          
+    }
+    logout=()=>{
+      this.props.logout()
+    }
+    handleLogoutFailure=()=>{
+      console.log('ERROR CANNOT LOGOUT')
+    }
+    getUsers=(user)=>{
+      this.props.getUsers(user)
+    }
+    responseGoogle = (googleUser) => {
+      if (googleUser){
         var profile = googleUser.getBasicProfile();
-        console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-        console.log('Name: ' + profile.getName());
-        console.log('Image URL: ' + profile.getImageUrl());
-        console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-      }*/
+        var user={
+          id :profile.getId(),
+          name:profile.getName(),
+          imgurl:profile.getImageUrl(),
+          email:profile.getEmail()
+        }
+        this.props.getUsers(user)
+      }else{
+        console.log('ERROR GOOGLE LOGIN')
+      }
+    }
+  
+   
 }
 
 

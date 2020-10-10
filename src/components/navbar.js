@@ -24,7 +24,7 @@ class Navbar extends React.Component{
     }
     render(){
         const{classes}=this.props
-       
+      
         return(
         <div className={classes.root}>
                     <AppBar position="static">
@@ -40,7 +40,7 @@ class Navbar extends React.Component{
                                 <MenuItem color="primary" onClick={this.handleClose} component={Link} to={'/Add'}>Add URL</MenuItem>
                                 <MenuItem color="primary" onClick={this.handleClose} component={Link} to={'/Account'}>My account</MenuItem>
                                 <MenuItem onClick={this.handleClose}component={Link} to={'/Link'}>Links</MenuItem>
-                                <MenuItem onClick={this.handleClose}component={Link} to={'/'}>Logout</MenuItem>
+                               
                             </Menu>
                         
                             <MenuIcon />
@@ -56,14 +56,24 @@ class Navbar extends React.Component{
                                  input: classes.inputInput,
                                  }}/>
 
-                        <Auth/>
+                        <Auth getUsers={this.getUsers} logged={this.props.logged} logout={this.logout} />
                         
                         </Toolbar>
                     </AppBar>
         </div>
         )
+    }   
+
+    logout=()=>{
+        this.props.logout()
     }
- 
+    getUsers=(user)=>{
+       
+        this.props.getUsers(user)
+    }
+    
+  
+   
     handleClose=()=>{
         if(this.state.menudisplay){
             

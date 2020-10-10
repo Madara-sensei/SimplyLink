@@ -29,14 +29,14 @@ class Url extends React.Component{
     }
   
     render(){
-      const {url,redirect,itemadded,classes}=this.props
+      const {url,redirect,itemadded,classes,logged}=this.props
       if(redirect){
         this.update_redirect()
         
       
       }
       
-      if(url){
+      if(logged && url){
         return(
         <div>
           <Typography className={classes.title} color='secondary'  variant="h4" gutterBottom>
@@ -120,7 +120,9 @@ class Url extends React.Component{
       </div>
         
     )}else{
-      return(<div></div>)}
+      return(<div>
+        <Typography className={classes.title} color='secondary' variant='h3'>You need to be logged to see your Link .</Typography>
+      </div>)}
     }
 
    

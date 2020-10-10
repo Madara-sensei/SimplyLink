@@ -8,6 +8,8 @@ import { BrowserRouter as Router, Switch,Redirect, Route, Link } from 'react-rou
 import theme from './components/theme'
 import {ThemeProvider} from '@material-ui/core/styles'
 
+
+
 const firebase = require('firebase')
 
 
@@ -17,7 +19,11 @@ class App extends React.Component{
     this.state = {
       url:null,
       redirect: null,
-      itemadded: null
+      itemadded: null,
+      logged:null,
+      imgurl:null,
+      name:null,
+      email:null
     }
   }
   render(){
@@ -26,7 +32,7 @@ class App extends React.Component{
       <ThemeProvider theme={theme}>
         
       <Router>
-          <Navbar/>
+          <Navbar getUsers={this.getUsers} logged={this.state.logged} logout={this.logout}/>
           {
              this.state.redirect ? <Redirect to="/Link"></Redirect>:null
            
@@ -36,9 +42,13 @@ class App extends React.Component{
               DeleteUrl={this.DeleteUrl} 
               redirect= {this.state.redirect}
               update_redirect= {this.update_redirect}
-              itemadded={this.state.itemadded}/> }/>
-              <Route path='/Account' render={()=> <Account/>}/>
-              <Route path='/Add' render={()=> <Add Sendurl={this.Sendurl}/>}/>
+              itemadded={this.state.itemadded}
+              logged={this.state.logged}/> }/>
+              <Route path='/Account' render={()=> <Account logged={this.state.logged} 
+              email={this.state.email} 
+              imgurl={this.state.imgurl} 
+              name={this.state.name}/>}/>
+              <Route path='/Add' render={()=> <Add Sendurl={this.Sendurl}  logged={this.state.logged}/>}/>
               
           </Switch>
           
@@ -54,35 +64,25 @@ class App extends React.Component{
   }
 
 
-  componentDidMount=()=>{
-    firebase
-    .firestore()
-    .collection('url')
-    .onSnapshot(serverUpdate=>{ 
-      const url = serverUpdate.docs.map(_doc=>{
-        const data = _doc.data();
-        data['id']= _doc.id;
-        return data
-      });// create array of result of a fonction
-      console.log(url)
-      this.setState({ url: url });
-    });// call after collections is updated
-
-  }
   Sendurl=async(title,description,link)=>{
-    await firebase
-    .firestore()
-    .collection('url')
-    .add({
-      Title:title,
-      Description:description,
-      Link:link,
-      timestamp:firebase.firestore.FieldValue.serverTimestamp()
-    }).then(
-      this.setState({itemadded:true,redirect:true})
-    )
+    if(this.state.email ){
+      await firebase
+      .firestore()
+      .collection('url')
+      .add({
+        Title:title,
+        Description:description,
+        Link:link,
+        timestamp:firebase.firestore.FieldValue.serverTimestamp()
+      }).then(
+        this.setState({itemadded:true,redirect:true})
+      )
+  
+  
 
+    }
 
+   
 
 
   }
@@ -90,7 +90,7 @@ class App extends React.Component{
   
     firebase
     .firestore()
-    .collection('url')
+    .collection(this.state.email)
     .doc(index)
     .delete()
     
@@ -101,6 +101,46 @@ class App extends React.Component{
     this.setState({
       redirect:null
     })
+  }
+  getLink=()=>{
+    
+  
+      firebase
+      .firestore()
+      .collection(this.state.email)
+      .onSnapshot(serverUpdate=>{ 
+        const url = serverUpdate.docs.map(_doc=>{
+          const data = _doc.data();
+          data['id']= _doc.id;
+          return data
+        });// create array of result of a fonction
+        console.log(url)
+        this.setState({ url: url });
+      });// call after collections is updated
+    
+    console.log('get link')
+  }
+
+  getUsers=(user)=>{
+    if(user){
+      this.setState({
+        logged:true,
+        name:user.name,
+        email:user.email,
+        imgurl:user.imgurl,
+
+      }).then(this.getLink())
+
+      console.log(user)
+
+    }else{
+      console.log('CANNOT GET INFO')
+    }
+   
+
+  }
+  logout=()=>{
+    this.setState({logged:null})
   }
 
 }

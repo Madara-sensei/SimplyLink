@@ -15,40 +15,49 @@ import { Typography } from '@material-ui/core';
 
 class Account extends React.Component{
     render() {
-        const{classes}=this.props
-        return(<Container className={classes.root} >
+        const{classes,email,imgurl,name,logged}=this.props
+        if(logged){
+                return(
+                <Container className={classes.root} >
 
-            <div className={classes.avt}>
-                <Avatar alt="Remy Sharp"  className={classes.large} />
-            </div>
-            <Typography className={classes.name}  color='secondary'  variant="h5" gutterBottom>Francis Martin</Typography>
-          
-             <List component="nav" className={classes.divider} aria-label="mailbox folders">
-             
-             <Divider />
-                <ListItem button>
-                    <ListItemText primary="Privacy"  />
-                    <SettingsIcon color="primary"/>
-                </ListItem>
-                <Divider />
-                <ListItem button divider>
-                    <ListItemText primary="Security"/>  
-                    <SettingsIcon  color="primary"/>
-                </ListItem>
-                <ListItem button>
-                    <ListItemText primary="Content" />
-                    <SettingsIcon  color="primary"/>
-                </ListItem>
-                <Divider />
-                <ListItem button>
-                    <ListItemText primary="Policy" />
-                    <SettingsIcon  color="primary"/>
-                </ListItem>
-           </List>
+                    <div className={classes.avt}>
+                        <Avatar alt={name} src={imgurl}  className={classes.large} />
+                    </div>
+                <Typography className={classes.name}  color='secondary'  variant="h5" gutterBottom>{name}</Typography>
+              
+                <List component="nav" className={classes.divider} aria-label="mailbox folders">
+                    
+                    <Divider />
+                        <ListItem button>
+                            <ListItemText primary="Privacy"  />
+                            <SettingsIcon color="primary"/>
+                        </ListItem>
+                        <Divider />
+                        <ListItem button divider>
+                            <ListItemText primary="Security"/>  
+                            <SettingsIcon  color="primary"/>
+                        </ListItem>
+                        <ListItem button>
+                            <ListItemText primary="Content" />
+                            <SettingsIcon  color="primary"/>
+                        </ListItem>
+                        <Divider />
+                        <ListItem button>
+                            <ListItemText primary="Policy" />
+                            <SettingsIcon  color="primary"/>
+                        </ListItem>
+                </List>
 
-           </Container>
-       
-      )
+                </Container>
+            
+            )
+        }else{
+            return(
+                <div>
+                    <Typography className={classes.log} variant="h4" color='secondary'>Login to see your account</Typography>
+                </div>
+            )
+        }
     }
 }
 export default withStyles (avatar) (Account)

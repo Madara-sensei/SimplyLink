@@ -7,10 +7,15 @@ const useStyles = theme => ({
       
       
     },
+    ntlog:{
+      textAlign: 'center',
+      marginTop:"2%"
+
+    },
     form: {
       flexGrow:1,
       marginTop:'3%',
-    
+      
       textAlign: 'center',
       
       '& > *': {
