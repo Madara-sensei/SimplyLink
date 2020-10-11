@@ -7,16 +7,13 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 import SettingsIcon from '@material-ui/icons/Settings';
-import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
-import Button from'@material-ui/core/Button'
-import EditIcon from '@material-ui/icons/Edit';
 import { Typography } from '@material-ui/core';
 
 class Account extends React.Component{
     render() {
-        const{classes,email,imgurl,name,logged}=this.props
-        if(logged){
+        const{classes,imgurl,name}=this.props
+        
                 return(
                 <Container className={classes.root} >
 
@@ -51,13 +48,7 @@ class Account extends React.Component{
                 </Container>
             
             )
-        }else{
-            return(
-                <div>
-                    <Typography className={classes.log} variant="h4" color='secondary'>Login to see your account</Typography>
-                </div>
-            )
-        }
+      
     }
 }
 export default withStyles (avatar) (Account)

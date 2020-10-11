@@ -5,13 +5,6 @@ import React from 'react'
 
 
 class Auth extends React.Component{
-    constructor(){
-        super();
-       
-
-        
-
-    }
     render(){
       const{logged}=this.props
       if(!logged){

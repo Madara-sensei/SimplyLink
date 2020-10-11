@@ -4,14 +4,13 @@ import Navbar from './components/navbar'
 import Footer from './components/footer'
 import Account from './components/account'
 import Add from './components/add'
-import { BrowserRouter as Router, Switch,Redirect, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Switch,Redirect, Route} from 'react-router-dom';
 import theme from './components/theme'
 import {ThemeProvider} from '@material-ui/core/styles'
-
-
-
+import { Typography } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
+import mainStyles from './components/styles/mainstyles'
 const firebase = require('firebase')
-
 
 class App extends React.Component{
   constructor(){;
@@ -27,49 +26,52 @@ class App extends React.Component{
     }
   }
   render(){
+    
     return(
     <div>
       <ThemeProvider theme={theme}>
-        
-      <Router>
+        <Router>
           <Navbar getUsers={this.getUsers} logged={this.state.logged} logout={this.logout}/>
           {
              this.state.redirect ? <Redirect to="/Link"></Redirect>:null
            
           }
-          <Switch>
+          {this.state.logged ?  
+            <Switch>
               <Route  path='/Link' render={() =><Url url={this.state.url} 
               DeleteUrl={this.DeleteUrl} 
               redirect= {this.state.redirect}
               update_redirect= {this.update_redirect}
-              itemadded={this.state.itemadded}
-              logged={this.state.logged}/> }/>
-              <Route path='/Account' render={()=> <Account logged={this.state.logged} 
+              itemadded={this.state.itemadded}/> }/>
+              <Route path='/Account' render={()=> 
+              <Account
               email={this.state.email} 
               imgurl={this.state.imgurl} 
               name={this.state.name}/>}/>
-              <Route path='/Add' render={()=> <Add Sendurl={this.Sendurl}  logged={this.state.logged}/>}/>
+              <Route path='/Add' render={()=> <Add Sendurl={this.Sendurl} />}/>
               
-          </Switch>
-          
+            </Switch>:
+            <div>
+            <Typography className={this.props.classes.ntlog} color='secondary' variant='h3'>You need to be logged to use SimplyLinks .</Typography>
+            </div>}
+        
+         
           <Footer/>
-         
           </Router>
-      
-          </ThemeProvider>
-          
-         
-    </div>)
-    
+      </ThemeProvider>
+    </div>
+    )
   }
-
-
+  componentDidMount=()=>{
+    this.getLink()
+  }
   Sendurl=async(title,description,link)=>{
     if(this.state.email ){
       await firebase
       .firestore()
       .collection('url')
       .add({
+        email:this.state.email,
         Title:title,
         Description:description,
         Link:link,
@@ -77,24 +79,14 @@ class App extends React.Component{
       }).then(
         this.setState({itemadded:true,redirect:true})
       )
-  
-  
-
     }
-
-   
-
-
   }
   DeleteUrl= (index)=>{
-  
     firebase
     .firestore()
-    .collection(this.state.email)
+    .collection('url')
     .doc(index)
     .delete()
-    
- 
   }
 
   update_redirect=()=>{
@@ -102,42 +94,38 @@ class App extends React.Component{
       redirect:null
     })
   }
-  getLink=()=>{
-    
   
-      firebase
+  getLink=async()=>{
+      await firebase
       .firestore()
-      .collection(this.state.email)
+      .collection('url').where('email',"==",this.state.email)  
       .onSnapshot(serverUpdate=>{ 
         const url = serverUpdate.docs.map(_doc=>{
           const data = _doc.data();
           data['id']= _doc.id;
           return data
-        });// create array of result of a fonction
+        });
         console.log(url)
         this.setState({ url: url });
-      });// call after collections is updated
-    
-    console.log('get link')
+      });
   }
 
   getUsers=(user)=>{
     if(user){
-      this.setState({
+      this.setState({ 
         logged:true,
         name:user.name,
         email:user.email,
         imgurl:user.imgurl,
 
-      }).then(this.getLink())
+      })
+      this.getLink()
 
       console.log(user)
 
     }else{
       console.log('CANNOT GET INFO')
     }
-   
-
   }
   logout=()=>{
     this.setState({logged:null})
@@ -146,4 +134,4 @@ class App extends React.Component{
 }
 
 
-export default App;
+export default withStyles(mainStyles)( App);

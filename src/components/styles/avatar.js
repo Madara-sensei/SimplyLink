@@ -2,7 +2,7 @@ const avatar =theme => ({
     avt:{
       display: 'flex',
       '& > *': {
-        margin: theme.spacing(1),
+       
         margin: 'auto'
       },
 

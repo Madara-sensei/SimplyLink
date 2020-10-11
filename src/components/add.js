@@ -16,8 +16,8 @@ class Add extends React.Component{
     }
   }
     render(){
-        const {classes,logged} = this.props
-        if(logged){
+        const {classes} = this.props
+        
           return (
             <div>
               <Container className={classes.root}  >
@@ -38,11 +38,7 @@ class Add extends React.Component{
             </div>
             )
 
-        }else{
-          return(<div>
-              <Typography className={classes.ntlog} color='secondary' variant='h3'>You need to be logged to add Links .</Typography>
-          </div>)
-        }
+        
         
     }
     fill_title=(value)=>{
