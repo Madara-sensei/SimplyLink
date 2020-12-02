@@ -46,13 +46,8 @@ class Navbar extends React.Component{
                         <Typography color="secondary" variant="h6" className={classes.title}>
                             SimplyLinks
                         </Typography>
-                        <SearchIcon />
-                        <InputBase
-                                placeholder="Search…"
-                                 inputProps={{ 'aria-label': 'search' }}
-                                 classes={{root: classes.inputRoot,
-                                 input: classes.inputInput,
-                                 }}/>
+                        
+                      
 
                         <Auth getUsers={this.getUsers} logged={this.props.logged} logout={this.logout} />
                         

@@ -3,10 +3,6 @@ const Urlstyles = theme => ({
     title:{
         textAlign: 'center',
         marginTop:"2%"
-   
-      
-      
-      
     },
     url:{
         marginTop:"1%"

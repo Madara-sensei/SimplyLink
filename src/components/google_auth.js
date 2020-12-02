@@ -21,6 +21,7 @@ class Auth extends React.Component{
           buttonText='Logout'
           onLogoutSuccess={ this.logout }
           onFailure={ this.handleLogoutFailure }
+          cookiePolicy={'single_host_origin'}
         ></GoogleLogout>
           
         )
@@ -44,11 +45,12 @@ class Auth extends React.Component{
       if (googleUser){
         var profile = googleUser.getBasicProfile();
         var user={
-          id :profile.getId(),
+         
           name:profile.getName(),
           imgurl:profile.getImageUrl(),
           email:profile.getEmail()
         }
+        var id_token = googleUser.getAuthResponse().id_token;
         this.props.getUsers(user)
       }else{
         console.log('ERROR GOOGLE LOGIN')
